@@ -1,10 +1,13 @@
 import FadeLoader from "react-spinners/FadeLoader";
+import placeholder from '../../assets/images/placeholder.jpg';
 
-const CharacterPhoto = ({ image, loading }) => {
-
+const CharacterPhoto = ({ searchedData, loading }) => {
   return (
     <div className="character_photo_wrapper">
-      <img src={image.src} alt={image.alt} />
+      <img 
+        src={searchedData.image || placeholder} 
+        alt={searchedData.name || "placeholder"} 
+      />
       <div className="loader_wrapper">
         <FadeLoader color="#000" loading={loading} />
       </div>
