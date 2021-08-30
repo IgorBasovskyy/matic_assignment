@@ -12,17 +12,9 @@ const App = () => {
   const [cachedData, setCachedData] = useState([]);
 
   useEffect(() => {
-    let characters = {...localStorage };
-    let arr = [];
-
-    for(let key in characters) {
-      arr.push(JSON.parse(characters[key]))
-    }
-
-    setCachedData(arr);
+    const characters = JSON.parse(localStorage.getItem("characters") || "[]");
+    setCachedData(characters);
   }, [searchedData]);
-
-  console.log(cachedData)
 
   return (
     <div className="App">
@@ -54,8 +46,11 @@ const App = () => {
             {!!cachedData.length && (
               <div className="text-center">
                 <CharacterCacheList 
+                  setNotFound={setNotFound}
                   cachedData={cachedData}
+                  searchedData={searchedData}
                   setCachedData={setCachedData}
+                  setSearchedData={setSearchedData}
                 />
               </div>
             )}

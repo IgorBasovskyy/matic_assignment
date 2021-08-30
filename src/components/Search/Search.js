@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from 'axios';
 
@@ -6,27 +6,22 @@ const Search = ({ setLoading, setSearchedData, setNotFound, cachedData }) => {
   const [submitting, setSubmitting] = useState(false)
   const { register, handleSubmit } = useForm();
 
-  // const onChangeHandler = e => {
-  //   const id = e.target.value;
-  // }
-
   const setCache = apiData => {
-    localStorage.setItem(apiData.id, JSON.stringify(apiData));
+    localStorage.setItem("characters", JSON.stringify([...cachedData, apiData]));
   }
 
   const onSearchHandler = async (data, event) => {
     event.preventDefault();
 
     const id = +data.id;
+    const cachedCharacter = JSON.parse(localStorage.getItem("characters"))?.filter(item => item.id === id);
 
-    setLoading(true)
-    setSubmitting(true);
-    
-    const cachedCharacter = JSON.parse(localStorage.getItem(id));
-
-    if (cachedCharacter && Object.keys(cachedCharacter)) {
-      setSearchedData(cachedCharacter);
+    if (cachedCharacter?.length) {
+      setSearchedData(...cachedCharacter);
     } else {
+      setLoading(true)
+      setSubmitting(true);
+
       await axios.get(`https://rickandmortyapi.com/api/character/${id}`)
       .then(response => {
         setSearchedData(response.data);
@@ -38,10 +33,10 @@ const Search = ({ setLoading, setSearchedData, setNotFound, cachedData }) => {
         setSearchedData({});
         setNotFound(true);
       })
-    }
 
-    setLoading(false)
-    setSubmitting(false);
+      setLoading(false)
+      setSubmitting(false);
+    }
   }
 
   return (

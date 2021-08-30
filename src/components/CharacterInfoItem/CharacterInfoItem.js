@@ -1,10 +1,10 @@
 const CharacterInfoItem = ({ label, value, styles }) => {
   return (
     <div className="character_info_item_wrapper">
-      <div className="character_info_item">
+      <div className="character_info_entity">
         {label}
       </div>
-      <div className={styles}>
+      <div className={`character_info_item ${styles}`}>
         {value || "Unknown"}
       </div>
     </div>

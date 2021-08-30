@@ -1,9 +1,29 @@
+import React, { useEffect, useState } from 'react';
 import CharacterCacheItem from '../CharacterCacheItem/CharacterCacheItem';
 
-const CharacterCacheList = ({ cachedData, setCachedData }) => {
+const CharacterCacheList = ({ cachedData, setCachedData, searchedData, setSearchedData, setNotFound }) => {
+  const [activeId, setActiveId] = useState(false);
+
   const clearAllHandler = () => {
     localStorage.clear();
     setCachedData([]);
+  }
+
+  useEffect(() => {
+    setActiveId(null)
+
+    cachedData.forEach(item => {
+      if (item.id === searchedData.id) {
+        setActiveId(item.id);
+      }
+    })
+  }, [searchedData, cachedData])
+
+  const chooseCachedCharacterHandler = id => {
+    setActiveId(id);
+    setNotFound(false);
+
+    setSearchedData(...cachedData.filter(item => item.id === id));
   }
 
   return (
@@ -20,9 +40,11 @@ const CharacterCacheList = ({ cachedData, setCachedData }) => {
             <CharacterCacheItem 
               key={item.id}
               item={item}
+              chooseCachedCharacterHandler={chooseCachedCharacterHandler}
+              activeId={activeId}
             />
           )
-        })}
+        }).reverse()}
       </div>  
     </>
   )

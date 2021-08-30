@@ -3,23 +3,30 @@ import CharacterInfoItem from '../CharacterInfoItem/CharacterInfoItem';
 const CharacterInfo = ({ searchedData }) => {
   const { name, species, type, location, origin, status } = searchedData;
 
-  const setColor = status => {
+  const setInfoTypeColor = type => {
     let className;
 
-    switch (status) {
-      case 'dead':
+    switch (type) {
+      case 'Dead':
         className = "dead"
         break;
-      case 'alive':
+      case 'Alive':
         className = "alive"
         break;
+      case 'Unknown':
+      case "":
       case 'unknown':
         className = "unknown_info"
         break;
       default:
+        className = "known_info"
     }
 
     return className;
+  }
+
+  const setFirstLeeterUpperCase = value => {
+    return value.charAt(0).toUpperCase() + value.slice(1)
   }
 
   return (
@@ -27,28 +34,28 @@ const CharacterInfo = ({ searchedData }) => {
       <h2>{name}</h2>
       <CharacterInfoItem 
         label="Species"
-        value={species}
-        styles={species.name ? "known_info" : "unknown_info"}
+        value={setFirstLeeterUpperCase(species)}
+        styles={setInfoTypeColor(species)}
       />
       <CharacterInfoItem 
         label="Type"
-        value={type}
-        styles={type.name ? "known_info" : "unknown_info"}
+        value={setFirstLeeterUpperCase(type)}
+        styles={setInfoTypeColor(type)}
       />
       <CharacterInfoItem 
         label="Location"
-        value={location.name}
-        styles={location.name ? "known_info" : "unknown_info"}
+        value={setFirstLeeterUpperCase(location.name)}
+        styles={setInfoTypeColor(location.name)}
       />
       <CharacterInfoItem 
         label="Origin"
-        value={origin.name}
-        styles={origin.name ? "known_info" : "unknown_info"}
+        value={setFirstLeeterUpperCase(origin.name)}
+        styles={setInfoTypeColor(origin.name)}
       />
       <CharacterInfoItem 
         label="Status"
-        value={status.charAt(0).toUpperCase() + status.slice(1)}
-        styles={setColor(status)}
+        value={setFirstLeeterUpperCase(status)}
+        styles={setInfoTypeColor(status)}
       />
     </div>
   )

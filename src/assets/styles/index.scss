@@ -94,7 +94,7 @@ body {
       align-items: center;
       margin: 10px 0;
 
-      .character_info_item {
+      .character_info_entity {
         margin-right: 20px;
         min-width: 80px;
         font-size: 16px;
@@ -102,31 +102,25 @@ body {
         color: #B1B1B1;
       }
 
-      .known_info {
+      .character_info_item {
         font-weight: bold;
         font-size: 16px;
         line-height: 21px;
+      }
+
+      .known_info {
         color: #000000;
       }
 
       .unknown_info {
-        font-weight: bold;
-        font-size: 16px;
-        line-height: 21px;
         color: #B1B1B1;
       }
 
       .dead {
-        font-weight: bold;
-        font-size: 16px;
-        line-height: 21px;
         color: #FF0000;
       }
 
       .alive {
-        font-weight: bold;
-        font-size: 16px;
-        line-height: 21px;
         color: #00ff00;
       }
     }
@@ -134,11 +128,25 @@ body {
 
   .character_cache_list {
     margin-top: 30px;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
+    height: 290px;
+    overflow-x: scroll;
+
+    &::-webkit-scrollbar { width: 0; }
 
     .character_cache_item {
       border-radius: 6px; 
       margin-bottom: 7px;
       cursor: pointer;
+
+      &.active {
+        border: 2px solid #0005FF;
+
+        img {
+          opacity: 1;
+        }
+      }
 
       img {
         width: 100%;
