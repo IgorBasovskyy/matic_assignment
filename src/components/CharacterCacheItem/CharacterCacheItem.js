@@ -1,6 +1,8 @@
-const CharacterCacheItem = () => {
+const CharacterCacheItem = ({item}) => {
   return (
-    <></>
+    <div className="character_cache_item">
+      <img src={item.image} />
+    </div>
   )
 }
 

@@ -89,6 +89,63 @@ body {
   }
 
   .character_info_wrapper {
-    
+    .character_info_item_wrapper {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+
+      .character_info_item {
+        margin-right: 20px;
+        min-width: 80px;
+        font-size: 16px;
+        line-height: 21px;
+        color: #B1B1B1;
+      }
+
+      .known_info {
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 21px;
+        color: #000000;
+      }
+
+      .unknown_info {
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 21px;
+        color: #B1B1B1;
+      }
+
+      .dead {
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 21px;
+        color: #FF0000;
+      }
+
+      .alive {
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 21px;
+        color: #00ff00;
+      }
+    }
+  }
+
+  .character_cache_list {
+    margin-top: 30px;
+
+    .character_cache_item {
+      border-radius: 6px; 
+      margin-bottom: 7px;
+      cursor: pointer;
+
+      img {
+        width: 100%;
+        border-radius: 6px;
+        padding: 3px;
+        opacity: 0.4;
+      }
+    }
   }
 }
