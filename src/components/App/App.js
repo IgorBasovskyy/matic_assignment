@@ -10,6 +10,7 @@ const App = () => {
   const [searchedData, setSearchedData] = useState({});
   const [notFound, setNotFound] = useState(false);
   const [cachedData, setCachedData] = useState([]);
+  const [currentInputValue, setCurrentInputValue] = useState("");
 
   useEffect(() => {
     const characters = JSON.parse(localStorage.getItem("characters") || "[]");
@@ -28,6 +29,7 @@ const App = () => {
               setCachedData={setCachedData}
               cachedData={cachedData}
               searchedData={searchedData}
+              setCurrentInputValue={setCurrentInputValue}
             />
             <CharacterPhoto 
               loading={loading}
@@ -48,9 +50,9 @@ const App = () => {
                 <CharacterCacheList 
                   setNotFound={setNotFound}
                   cachedData={cachedData}
-                  searchedData={searchedData}
                   setCachedData={setCachedData}
                   setSearchedData={setSearchedData}
+                  currentInputValue={currentInputValue}
                 />
               </div>
             )}

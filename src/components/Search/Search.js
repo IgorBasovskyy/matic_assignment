@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import axios from 'axios';
 
-const Search = ({ setLoading, setSearchedData, setNotFound, cachedData }) => {
+const Search = ({ setLoading, setSearchedData, setNotFound, cachedData, setCurrentInputValue }) => {
   const [submitting, setSubmitting] = useState(false)
-  const { register, handleSubmit } = useForm();
+  const { handleSubmit, control } = useForm();
 
   const setCache = apiData => {
     localStorage.setItem("characters", JSON.stringify([...cachedData, apiData]));
+  }
+  
+  const onChangeHandler = event => {
+    const value = +event.target.value;
+    setCurrentInputValue(value);
   }
 
   const onSearchHandler = async (data, event) => {
@@ -29,7 +34,7 @@ const Search = ({ setLoading, setSearchedData, setNotFound, cachedData }) => {
         setNotFound(false);
       })
       .catch(error => {
-        console.log('error');
+        console.log('error', error);
         setSearchedData({});
         setNotFound(true);
       })
@@ -42,12 +47,22 @@ const Search = ({ setLoading, setSearchedData, setNotFound, cachedData }) => {
   return (
     <div className="search_wrapper">
       <form onSubmit={handleSubmit(onSearchHandler)}>
-        <input 
-          type="number" 
-          placeholder="Enter any number" 
-          disabled={submitting}
-          // onChange={onChangeHandler}
-          {...register("id", { required: true })}
+        <Controller
+          render={({ field: { value = "", onChange } }) => (
+            <input  
+              onChange={(e) => {
+                onChange((e.target.value))
+                onChangeHandler(e)
+              }}
+              placeholder="Enter any number" 
+              type="number" 
+              disabled={submitting}
+              value={value}
+            />
+          )}
+          name="id"
+          control={control}
+          rules={{ required: true }}
         />
         <button
           className="action_btn"
