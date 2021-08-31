@@ -13,9 +13,26 @@ const App = () => {
   const [currentInputValue, setCurrentInputValue] = useState("");
 
   useEffect(() => {
+    // Getting the characters from the localStorage or an empty array if localStorage is empty and set characters
+    // to cache list for render.
     const characters = JSON.parse(localStorage.getItem("characters") || "[]");
     setCachedData(characters);
   }, [searchedData]);
+
+  const postedCharacterCheck = () => {
+    const characters = JSON.parse(localStorage.getItem("characters") || "[]");
+    const updatedCharacters = characters.filter(item => {
+      const currentDate = Date.now();
+      if ((currentDate - item.fetched_date) < (2 * 60 * 60 * 1000)) return item;
+    })
+    localStorage.setItem("characters", JSON.stringify(updatedCharacters));
+  }
+
+  useEffect(() => {
+    // Getting the characters from the localStorage and check whether two hours have passed since the installation of 
+    // the character in the localStorage. if so, delete the character from the array and set a new array to the localStorage.
+    postedCharacterCheck();                      
+  }, []);
 
   return (
     <div className="App">

@@ -8,9 +8,11 @@ const CharacterPhoto = ({ searchedData, loading }) => {
         src={searchedData.image || placeholder} 
         alt={searchedData.name || "placeholder"} 
       />
-      <div className="loader_wrapper">
-        <FadeLoader color="#000" loading={loading} />
-      </div>
+      {loading && (
+        <div className="loader_wrapper">
+          <FadeLoader color="#000" loading={true} />
+        </div>
+      )}
     </div>
   )
 }
