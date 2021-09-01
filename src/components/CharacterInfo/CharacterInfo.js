@@ -1,9 +1,13 @@
+import React, { useContext }  from 'react';
 import CharacterInfoItem from '../CharacterInfoItem/CharacterInfoItem';
+import { CharactersContext } from '../../context/Characters';
 
-const CharacterInfo = ({ searchedData }) => {
+const CharacterInfo = () => {
+  const { searchedData } = useContext(CharactersContext);
   const { name, species, type, location, origin, status } = searchedData;
 
   const setInfoTypeColor = type => {
+    // ckecking type of character property to set required className
     let className;
 
     switch (type) {
@@ -26,11 +30,12 @@ const CharacterInfo = ({ searchedData }) => {
   }
 
   const setFirstLeeterUpperCase = value => {
+    // making the first letter of character property upperCase
     return value.charAt(0).toUpperCase() + value.slice(1)
   }
 
   return (
-    <div className="character_info_wrapper">
+    <div>
       <h2>{name}</h2>
       <CharacterInfoItem 
         label="Species"

@@ -1,12 +1,13 @@
 import React from "react";
 import { ReactComponent as CloseIcon } from '../../assets/icons/close.svg';
+import classes from './index.module.scss';
 
 const CharacterCacheItem = ({ item, chooseCachedCharacterHandler, activeId, deleteCacheCharacater }) => {
   const { image, name, id } = item;
 
   return (
     <div 
-      className={`character_cache_item ${activeId === id ? "active" : ""}`}
+      className={`${classes.Character_Cache_Item} ${activeId === id ? classes.Active : ""}`}
       onClick={() => chooseCachedCharacterHandler(id)}
     >
       <img 
@@ -14,7 +15,7 @@ const CharacterCacheItem = ({ item, chooseCachedCharacterHandler, activeId, dele
         alt={name} 
       />
       <div 
-        className="close_button"
+        className={classes.Close_Button}
         onClick={(event) => deleteCacheCharacater(event, id)}
       >
         <CloseIcon />

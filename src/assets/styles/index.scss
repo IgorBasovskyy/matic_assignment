@@ -41,7 +41,6 @@ body {
     line-height: 23px;
     color: #000000;
     font-style: italic;
-    padding-right: 49px;
 
     &:focus {
       outline: none;
@@ -52,133 +51,19 @@ body {
     }
   }
 
-  .search_wrapper {
-    position: relative;
-    margin-bottom: 27px;
-
-    button {
-      position: absolute;
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
-      border-bottom: 1px solid #000;
-
-      &:disabled {
-        color: #B1B1B1;
-      }
-    }
+  .known_info {
+    color: #000000;
   }
 
-  .character_photo_wrapper {
-    position: relative;
-
-    img {
-      width: 100%;
-      border-radius: 5px;
-      box-shadow: 0px 0px 34px rgba(0, 0, 0, 0.0914656);
-    }
-
-    .loader_wrapper {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #fff;
-      border-radius: 5px;
-    }
+  .unknown_info {
+    color: #B1B1B1;
   }
 
-  .character_info_wrapper {
-    .character_info_item_wrapper {
-      display: flex;
-      align-items: center;
-      margin: 10px 0;
-
-      .character_info_entity {
-        margin-right: 20px;
-        min-width: 80px;
-        font-size: 16px;
-        line-height: 21px;
-        color: #B1B1B1;
-      }
-
-      .character_info_item {
-        font-weight: bold;
-        font-size: 16px;
-        line-height: 21px;
-      }
-
-      .known_info {
-        color: #000000;
-      }
-
-      .unknown_info {
-        color: #B1B1B1;
-      }
-
-      .dead {
-        color: #FF0000;
-      }
-
-      .alive {
-        color: #00ff00;
-      }
-    }
+  .Dead {
+    color: #FF0000;
   }
 
-  .character_cache_list {
-    margin-top: 30px;
-
-    .character_cache_item {
-      border-radius: 6px; 
-      margin-bottom: 7px;
-      cursor: pointer;
-      position: relative;
-
-      &.active {
-        img {
-          opacity: 1;
-          border: 2px solid #0005FF;
-        }
-      }
-
-      img {
-        width: 100%;
-        border-radius: 6px;
-        padding: 3px;
-        opacity: 0.4;
-      }
-
-      .close_button {
-        width: 20px;
-        height: 20px;
-        background: #F1F1F1;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        position: absolute;
-        top: -5px;
-        right: -5px;
-
-        svg {
-          width: 15px;
-          height: 15px;
-          display: none;
-        }
-
-        &:hover svg {
-          display: block;
-        }
-      }
-
-      &:hover .close_button {
-        display: flex;
-      }
-    }
+  .alive {
+    color: #00ff00;
   }
 }

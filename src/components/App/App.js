@@ -4,6 +4,7 @@ import Search from '../Search/Search';
 import CharacterPhoto from '../CharacterPhoto/CharacterPhoto';
 import CharacterInfo from '../CharacterInfo/CharacterInfo';
 import CharacterCacheList from '../CharacterCacheList/CharacterCacheList';
+import { CharactersContext } from '../../context/Characters';
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -35,48 +36,35 @@ const App = () => {
   }, []);
 
   return (
-    <div className="App">
-      <Container>
-        <Row>
-          <Col lg={3}>
-            <Search 
-              setLoading={setLoading}
-              setSearchedData={setSearchedData}
-              setNotFound={setNotFound}
-              setCachedData={setCachedData}
-              cachedData={cachedData}
-              searchedData={searchedData}
-              setCurrentInputValue={setCurrentInputValue}
-            />
-            <CharacterPhoto 
-              loading={loading}
-              searchedData={searchedData}
-            />
-          </Col>
-          <Col lg={8}>
-            {!!Object.keys(searchedData).length && (
-              <CharacterInfo 
-                searchedData={searchedData}
-              />
-            )}
-            {notFound && <h2 className="not_found">Character not found</h2>}
-          </Col>
-          <Col lg={1}>
-            {!!cachedData.length && (
-              <div className="text-center">
-                <CharacterCacheList 
-                  setNotFound={setNotFound}
-                  cachedData={cachedData}
-                  setCachedData={setCachedData}
-                  setSearchedData={setSearchedData}
-                  currentInputValue={currentInputValue}
-                />
-              </div>
-            )}
-          </Col>
-        </Row>
-      </Container>
-    </div>
+    <CharactersContext.Provider value={{ 
+      setLoading, 
+      setSearchedData, 
+      setNotFound, 
+      setCachedData, 
+      cachedData, 
+      searchedData, 
+      setCurrentInputValue, 
+      loading, 
+      currentInputValue 
+    }}>
+      <div className="App">
+        <Container>
+          <Row>
+            <Col lg={3}>
+              <Search />
+              <CharacterPhoto />
+            </Col>
+            <Col lg={8}>
+              {!!Object.keys(searchedData).length && <CharacterInfo />}
+              {notFound && <h2 className="not_found">Character not found</h2>}
+            </Col>
+            <Col lg={1}>
+              {!!cachedData.length && <div className="text-center"><CharacterCacheList /></div>}
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    </CharactersContext.Provider>
   );
 }
 

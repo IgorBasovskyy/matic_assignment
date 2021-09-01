@@ -1,10 +1,12 @@
+import classes from './index.module.scss';
+
 const CharacterInfoItem = ({ label, value, styles }) => {
   return (
-    <div className="character_info_item_wrapper">
-      <div className="character_info_entity">
+    <div className={classes.Character_Info_Item_Wrapper}>
+      <div className={classes.Character_Info_Entity}>
         {label}
       </div>
-      <div className={`character_info_item ${styles}`}>
+      <div className={`${classes.Character_Info_Item} ${styles}`}>
         {value || "Unknown"}
       </div>
     </div>
