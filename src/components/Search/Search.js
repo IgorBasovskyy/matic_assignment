@@ -5,7 +5,7 @@ import { CharactersContext } from '../../context/Characters';
 import classes from './index.module.scss';
 
 const Search = () => {
-  const { setLoading, setSearchedData, setNotFound, cachedData, setCurrentInputValue } = useContext(CharactersContext);
+  const { setLoading, setSearchedData, setNotFound, cachedData, setCurrentInputValue, currentInputValue } = useContext(CharactersContext);
   const [submitting, setSubmitting] = useState(false); // state for disable input and search button when request is pending
   const { handleSubmit, control } = useForm(); // hook from react-hook-from library to manage the forms
 
@@ -20,6 +20,7 @@ const Search = () => {
     // getting input value
     const value = +event.target.value;
     setCurrentInputValue(value);
+    if (value === 0) setCurrentInputValue("");
   }
 
   const characterRequest = async id => {
@@ -68,7 +69,7 @@ const Search = () => {
               placeholder="Enter any number" 
               type="number" 
               disabled={submitting}
-              value={value}
+              value={currentInputValue}
             />
           )}
           name="id"

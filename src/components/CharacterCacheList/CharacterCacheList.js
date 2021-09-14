@@ -4,35 +4,29 @@ import { CharactersContext } from '../../context/Characters';
 import classes from './index.module.scss';
 
 const CharacterCacheList = () => {
-  const { cachedData, setCachedData, setSearchedData, setNotFound, currentInputValue } = useContext(CharactersContext);
+  const { cachedData, setCachedData, setSearchedData, setNotFound, currentInputValue, setCurrentInputValue } = useContext(CharactersContext);
   const [activeId, setActiveId] = useState(null);
 
-  const setCachedCharacter = id => {
-    setSearchedData(...cachedData.filter(item => item.id === id))
+  const setCachedCharacter = character => {
+    setSearchedData(character)
   };
 
   useEffect(() => {
-    setActiveId(null);
     // setting a character active if it in the cache and user tap equal id with the cached character
     // otherwise set active a character that must be fetched from the api
-    if (currentInputValue) {
-      cachedData.forEach(item => {
-        if (item.id === currentInputValue) {
-          setActiveId(item.id);
-          setCachedCharacter(item.id);
-        } else {
-          setActiveId(currentInputValue);
-        }
-      })
-    } else {
-      setSearchedData({});
-    }
+    const character = cachedData.find(item => item.id === currentInputValue);
+    setActiveId(null);
+    setSearchedData({});
+  
+    if (currentInputValue) setActiveId(currentInputValue);
+    if (character) setCachedCharacter(character);
   }, [currentInputValue])
   
   const clearAllHandler = () => {
     localStorage.clear(); // clear all cached data from localStorage
     setCachedData([]); // clear cached characters from ui
     if (activeId) setSearchedData({}); // clear character information if it on the screen
+    setCurrentInputValue("");
   }
 
   const deleteCacheCharacater = (event, id) => {
@@ -42,16 +36,14 @@ const CharacterCacheList = () => {
       .filter(item => item.id !== id);
 
     localStorage.setItem("characters", JSON.stringify([...characters]));
-
-    if (id === activeId) setSearchedData({});
-    setCachedData(characters)
+    setCachedData(characters);
+    setCurrentInputValue("");
   }
 
   const chooseCachedCharacterHandler = id => {
     // making character active
-    setActiveId(id);
     setNotFound(false);
-    setCachedCharacter(id);
+    setCurrentInputValue(id)
   }
 
   return (
