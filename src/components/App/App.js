@@ -29,6 +29,10 @@ const App = () => {
     localStorage.setItem("characters", JSON.stringify(updatedCharacters));
   }
 
+  const bla = () => {
+    
+  }
+
   useEffect(() => {
     // Getting the characters from the localStorage and check whether two hours have passed since the installation of 
     // the character in the localStorage. if so, delete the character from the array and set a new array to the localStorage.
