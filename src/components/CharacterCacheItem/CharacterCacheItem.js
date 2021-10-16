@@ -6,7 +6,7 @@ const CharacterCacheItem = ({ item, chooseCachedCharacterHandler, activeId, dele
   const { image, name, id } = item;
 
   return (
-    <div 
+    <button 
       className={`${classes.Character_Cache_Item} ${activeId === id ? classes.Active : ""}`}
       onClick={() => chooseCachedCharacterHandler(id)}
     >
@@ -20,7 +20,7 @@ const CharacterCacheItem = ({ item, chooseCachedCharacterHandler, activeId, dele
       >
         <CloseIcon />
       </div>
-    </div>
+    </button>
   )
 }
 
