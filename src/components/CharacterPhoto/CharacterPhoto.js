@@ -1,18 +1,19 @@
 import React, { useContext } from "react";
 import FadeLoader from "react-spinners/FadeLoader";
-import placeholder from '../../assets/images/placeholder.jpg';
+
 import { CharactersContext } from '../../context/Characters';
+import placeholder from '../../assets/images/placeholder.jpg';
 import classes from './index.module.scss';
 
 const CharacterPhoto = () => {
-  const { searchedData, loading } = useContext(CharactersContext);
+  const { loading, activeCharacter } = useContext(CharactersContext);
 
   return (
     <div className={classes.Character_Photo_Wrapper}>
       <img 
         className={classes.Character_Photo}
-        src={searchedData.image || placeholder} 
-        alt={searchedData.name || "placeholder"} 
+        src={activeCharacter.image || placeholder} 
+        alt={activeCharacter.name || "placeholder"} 
       />
       {loading && (
         <div className={classes.Spinner_Wrapper}>

@@ -1,29 +1,30 @@
 import React, { useContext } from "react";
 import axios from 'axios';
+
 import { CharactersContext } from '../../context/Characters';
 import classes from './index.module.scss';
 
 const Search = () => {
-  const { setLoading, setSearchedData, setNotFound, cachedData, setCurrentInputValue, currentInputValue, loading } = useContext(CharactersContext);
+  const { setLoading, setNotFound, setCurrentInputValue, currentInputValue, loading, setActiveCharacter, characters, setCharacters } = useContext(CharactersContext);
 
   const setCache = character => {
     // setting fetched caharacter to the localStorage with fetched date
     character.fetched_date = Date.now();
-    localStorage.setItem("characters", JSON.stringify([...cachedData, character]));
+    setActiveCharacter(character);
+    setCharacters([...characters, character]);
   }
-
+  
   const characterRequest = id => {
     setLoading(true);
 
     axios.get(`https://rickandmortyapi.com/api/character/${id}`)
       .then(response => {
-        setSearchedData(response.data);
         setCache(response.data);
         setNotFound(false);
       })
       .catch(error => {
         console.log('error', error);
-        setSearchedData({});
+        setActiveCharacter({});
         setNotFound(true);
       })
       .finally(() => {
@@ -33,21 +34,20 @@ const Search = () => {
 
   const onSearchHandler = event => {
     event.preventDefault();
-
-    const cachedCharacter = JSON.parse(localStorage.getItem("characters"))
-      ?.find(item => item.id === currentInputValue); //check the current character with characters from the localStorage if so then we do not make a request
+    //check the current character with characters from the localStorage if so then we do not make a request
+    const cachedCharacter = characters?.find(item => item.id === currentInputValue); 
 
     if (cachedCharacter) {
-      setSearchedData(cachedCharacter);
+      setActiveCharacter(cachedCharacter);
     } else {
       characterRequest(currentInputValue); // request
     }
   }
 
   const onChangeHandler = event => {
-    const { value }  = event.target;
-
-    setCurrentInputValue(+value);
+    const { value } = event.target;
+    if (+value > 0) setCurrentInputValue(+value);
+    if (+value === 0) setCurrentInputValue("");
   }
 
   return (

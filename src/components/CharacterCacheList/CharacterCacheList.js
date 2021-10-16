@@ -1,50 +1,49 @@
 import React, { useEffect, useState, useContext } from 'react';
+
 import CharacterCacheItem from '../CharacterCacheItem/CharacterCacheItem';
 import { CharactersContext } from '../../context/Characters';
 import classes from './index.module.scss';
 
 const CharacterCacheList = () => {
-  const { cachedData, setCachedData, setSearchedData, setNotFound, currentInputValue, setCurrentInputValue } = useContext(CharactersContext);
+  const { setNotFound, currentInputValue, setCurrentInputValue, setActiveCharacter, characters, setCharacters } = useContext(CharactersContext);
   const [activeId, setActiveId] = useState(null);
-  
-  const setCachedCharacter = character => {
-    setSearchedData(character);
-  };
 
   useEffect(() => {
     // setting a character active if it in the cache and user tap equal id with the cached character
     // otherwise set active a character that must be fetched from the api
-    const character = cachedData.find(item => item.id === currentInputValue);
-    setActiveId(null);
-    setSearchedData({});
-  
-    if (currentInputValue) setActiveId(currentInputValue);
-    if (character) setCachedCharacter(character);
+    const character = characters.find(item => item.id === currentInputValue);
+    
+    if (character) {
+      setActiveId(character.id);
+      setActiveCharacter(character);
+    } else {
+      setActiveId(currentInputValue);
+      setActiveCharacter({});
+    }
   }, [currentInputValue])
   
   const clearAllHandler = () => {
     localStorage.clear(); // clear all cached data from localStorage
-    setCachedData([]); // clear cached characters from ui
-    if (activeId) setSearchedData({}); // clear character information if it on the screen
+    setActiveCharacter({}); // clear character information if it on the screen
+    setCharacters([]);
     setCurrentInputValue("");
   }
 
   const deleteCacheCharacater = (event, id) => {
     // delete certain character
     event.stopPropagation();
-    const characters = JSON.parse(localStorage.getItem("characters"))
-      .filter(item => item.id !== id);
-
-    localStorage.setItem("characters", JSON.stringify([...characters]));
-    if (!characters.length) setSearchedData({});
-    setCachedData(characters);
+    const charactersList = characters.filter(item => item.id !== id);
+    setCharacters(charactersList);
+    setActiveCharacter({});
     setCurrentInputValue("");
   }
 
   const chooseCachedCharacterHandler = id => {
     // making character active
     setNotFound(false);
-    setCurrentInputValue(id)
+    setActiveCharacter(characters.find(item => item.id === id));
+    setActiveId(id);
+    setCurrentInputValue(id);
   }
 
   return (
@@ -56,7 +55,7 @@ const CharacterCacheList = () => {
         Clear All
       </button>
       <div className={classes.Character_Cache_List}>
-        {cachedData.map(item => {
+        {characters.map(item => {
           return (
             <CharacterCacheItem 
               key={item.id}

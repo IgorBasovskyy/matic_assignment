@@ -3,8 +3,8 @@ import CharacterInfoItem from '../CharacterInfoItem/CharacterInfoItem';
 import { CharactersContext } from '../../context/Characters';
 
 const CharacterInfo = () => {
-  const { searchedData } = useContext(CharactersContext);
-  const { name, species, type, location, origin, status } = searchedData;
+  const { activeCharacter } = useContext(CharactersContext);
+  const { name, species, type, location, origin, status } = activeCharacter;
 
   return (
     <div>
